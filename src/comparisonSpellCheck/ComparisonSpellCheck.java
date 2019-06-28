@@ -1,17 +1,19 @@
-package recursiveSpellCheck;
+package comparisonSpellCheck;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 
-public class SpellCheckRecursive {
+public class ComparisonSpellCheck {
+
 	
 	// Local containers
-	 int [] rstWordLengths = {2, 3, 4, 5, 6, 7, 8, 9, 10};
-	 int Nrsts = 8;	 // Predefined maximum word length
-	 RecursiveSpellTree [] rsts = new  RecursiveSpellTree [Nrsts];
-	 String [] fileNames = {"resources/twoLetterWords.txt",
+	int NSpellCheckers = 9; // This corresponds to the number of resource files
+	// These word lengths correspond to the resource files
+	int [] wordLengths = {2, 3, 4, 5, 6, 7, 8, 9, 10};
+	ComparisonSpellChecker [] cscs = new ComparisonSpellChecker [NSpellCheckers];
+	String [] fileNames = {"resources/twoLetterWords.txt",
 			 "resources/threeLetterWords.txt", "resources/fourLetterWords.txt",
 			 "resources/fiveLetterWords.txt","resources/sixLetterWords.txt",
 			 "resources/sevenLetterWords.txt","resources/eightLetterWords.txt",
@@ -21,11 +23,11 @@ public class SpellCheckRecursive {
 	 public boolean checkWord( String word )
 	 {
 		 boolean isWord = false;
-		 for( int i = 0; i < Nrsts; i++ )
+		 for( int i = 0; i < NSpellCheckers; i++ )
 		 {
-			 if(word.length() == rstWordLengths[i])
+			 if(word.length() == wordLengths[i])
 			 {
-				 isWord = rsts[i].checkSpelling(word);	 
+				 isWord = cscs[i].checkSpelling(word);	 
 			 }
 		 }
 		 return isWord;
@@ -33,34 +35,26 @@ public class SpellCheckRecursive {
 	 
 	 
 	 // Initializer that sets up the spell checker with a pre-defined maximum word length
-	 SpellCheckRecursive() throws IOException {
-		 setupSpellCheck(rstWordLengths[Nrsts-1]);
+	 ComparisonSpellCheck() throws IOException {
+		 setupSpellCheck(wordLengths[NSpellCheckers-1]);
 	 }
 	 
 	 // Initializer that sets up the spell check with a specified word length
-	 public SpellCheckRecursive( int maxWordLength ) throws IOException {
+	 public ComparisonSpellCheck( int maxWordLength ) throws IOException {
 		 setupSpellCheck( maxWordLength );
 	 }
 	 
 	 // Sets up the spell check using the resource files for correct spellings
 	 public void setupSpellCheck ( int maxWordLength ) throws IOException{
 		 
-		 for( int i = 0; i < Nrsts; i++ )
-		 {
-			 if(maxWordLength == rstWordLengths[i])
-			 {
-				 Nrsts = i+1;
-			 }
-		 }
-		 
-		 for( int k = 0; k < Nrsts; k++ )
+		 for( int k = 0; k < NSpellCheckers; k++ )
 		 {
 		
 			// Load file
 			ClassLoader classLoader = this.getClass().getClassLoader();	        
 		    File file = new File(classLoader.getResource(fileNames[k]).getFile());      
 		    String content = new String(Files.readAllBytes(file.toPath()));
-		    int wordsLength = rstWordLengths[k]; 
+		    int wordsLength = wordLengths[k]; 
 		    
 			 int Nwords = 0;
 		     for (int i=0; i < content.length(); i++)
@@ -100,14 +94,9 @@ public class SpellCheckRecursive {
 		    	 }
 		    	 
 		     }
-	
-		     int recursionIndex = 0;
-		     int idxStart = 0;
-		     int idxEnd = Nwords;
-	
-		     // Set up the recursive spell tree
-		     rsts[k] = new RecursiveSpellTree( recursionIndex, 
-		    		 				wordList, wordsLength, idxStart, idxEnd );
+
+		     // Set up the comparison spell checker
+		     cscs[k] = new ComparisonSpellChecker( wordList, Nwords, wordsLength );
 		     
 		 }
 	 }

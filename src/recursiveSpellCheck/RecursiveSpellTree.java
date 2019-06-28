@@ -9,16 +9,12 @@ public class RecursiveSpellTree {
 	int wordCheckLength;
 	char letterChecked;
 	
-	
-	
 	public boolean checkSpelling ( String word )
 	{
 		int currentIdx = 0;
 		return checkSpellingRecur ( word.toCharArray(), currentIdx );
-
 	}
 	
-
 	// Use the recursive tree to check the spelling
 	public boolean checkSpellingRecur ( char [] word, int currentIdx )
 	{
@@ -64,7 +60,7 @@ public class RecursiveSpellTree {
 	RecursiveSpellTree (){
 	}
 	
-	// Constructor that initializes three tree
+	// Constructor that initializes the tree
 	RecursiveSpellTree ( int recursionIndex, char [][] wordList, 
 			 			 int wordsLength, int idxStart, int idxEnd ){
 		BuildSpellTree ( recursionIndex, wordList, 
