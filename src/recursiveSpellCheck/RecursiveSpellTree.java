@@ -18,38 +18,15 @@ public class RecursiveSpellTree {
 
 	}
 	
-	
+
+	// Use the recursive tree to check the spelling
 	public boolean checkSpellingRecur ( char [] word, int currentIdx )
 	{
 	
 		boolean out = false;
 		
 		int charInt = word[currentIdx]-'a';
-		
-		/*
-		System.out.println(word);
-		System.out.print(wordCheckLength);
-		System.out.print("  " );
-		System.out.print(currentIdx);
-		System.out.print("  " );
 
-		System.out.print(word[currentIdx]);
-		System.out.print("  " );
-		System.out.println( letterContinuation[charInt] );
-		
-
-		for(int i = 0; i < 26; i++)
-		{
-			System.out.print(i);
-			System.out.print("  ");
-			System.out.print((char)('a'+i));
-			System.out.print("  ");
-			System.out.print(letterContinuation[i]);
-			System.out.println("  ");
-		}
-		System.out.println(" ------------------------------------ ");
-		*/
-		
 		if( letterContinuation[charInt] && currentIdx < wordCheckLength-1 )
 		{
 			// Set to true, so that when this recursion kicks back
@@ -83,21 +60,21 @@ public class RecursiveSpellTree {
 	}
 	
 	
+	// Empty constructor
 	RecursiveSpellTree (){
-		
 	}
 	
+	// Constructor that initializes three tree
 	RecursiveSpellTree ( int recursionIndex, char [][] wordList, 
-			 			 int wordsLength, int idxStart, int idxEnd )
-	{
+			 			 int wordsLength, int idxStart, int idxEnd ){
 		BuildSpellTree ( recursionIndex, wordList, 
 						 wordsLength, idxStart, idxEnd );
 	}
 	
 	
 	public void BuildSpellTree ( int recursionIndex, char [][] wordList, 
-				  				 int wordsLength, int idxStart, int idxEnd )
-	{
+				  				 int wordsLength, int idxStart, int idxEnd ){
+		
 		wordCheckLength = wordsLength;
 		
 		int [] startIndices = new int [26];
@@ -138,27 +115,6 @@ public class RecursiveSpellTree {
 			endIndices[i] =  startIndices[i] + nWordsWithChar[i];
 		}
 		
-		/*
-		// the end indices
-		int previousLetterIndex = charValuePrimer;
-		for(int i = 0; i < 26; i++)
-		{
-			if(	letterContinuation[i]  )
-			{
-				endIndices[previousLetterIndex] =  startIndices[i];
-				previousLetterIndex = i;
-				
-				// If the value wasn't set, it's the last point
-				if(endIndices[previousLetterIndex] == -1)
-				{
-					endIndices[previousLetterIndex] = idxEnd;
-					
-				}
-			
-			}
-		}
-		*/
-	
 		// Size of the tree
 		Ntree = 0;
 		for(int i = 0; i < 26; i++)
@@ -170,45 +126,6 @@ public class RecursiveSpellTree {
 			}
 		}
 		
-		
-		/*
-		String temp = new String( wordList[idxStart] );
-		if( temp.contentEquals( "recursion" ) )
-		{
-
-		
-			System.out.print("  idx start = ");
-			System.out.print(idxStart);
-			System.out.print("  idx end = ");
-			System.out.print(idxEnd);
-			System.out.print("  recursion =  ");
-			System.out.print(recursionIndex);
-			System.out.println(" ------------------------------------ ");
-			System.out.println("  ");
-	
-			for( int i = idxStart; i < idxEnd; i++ )
-			{
-				System.out.println(wordList[i]);
-			}
-			
-			
-			for(int i = 0; i < 26; i++)
-			{
-				System.out.print(i);
-				System.out.print("  ");
-				System.out.print((char)('a'+i));
-				System.out.print("  ");
-				System.out.print(letterContinuation[i]);
-				System.out.print("  ");
-				System.out.print(startIndices[i]);
-				System.out.print("  ");
-				System.out.print(nWordsWithChar[i]);
-				System.out.print("  ");
-				System.out.println(endIndices[i]);
-				
-			}
-		}
-		*/
 		
 
 		// Recursive call to build any additional 
@@ -228,12 +145,8 @@ public class RecursiveSpellTree {
 				j = j+1;
 			}
 		}
-		
-
 
 
 	}
-
-	
 	
 }
